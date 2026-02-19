@@ -1,11 +1,12 @@
-const mysql = require('mysql2/promise');
-const path = require('path');
-const dotenv = require('dotenv');
+import mysql from 'mysql2/promise';
+import path from 'path';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
 
-// Load .env file
-dotenv.config({
-  path: path.resolve(__dirname, '.env'),
-});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 const pool = mysql.createPool({
   host: process.env.MYSQL_HOST || 'localhost',
@@ -23,4 +24,4 @@ async function query(sql, params) {
   return rows;
 }
 
-module.exports = { pool, query };
+export { pool, query };
